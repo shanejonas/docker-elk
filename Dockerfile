@@ -7,7 +7,7 @@ FROM qnib/terminal
 MAINTAINER "Christian Kniep <christian@qnib.org>"
 
 ADD etc/yum.repos.d/logstash-1.4.repo /etc/yum.repos.d/logstash-1.4.repo
-ADD etc/yum.repos.d/elasticsearch-1.0.repo /etc/yum.repos.d/elasticsearch-1.0.repo
+ADD etc/yum.repos.d/elasticsearch-1.2.repo /etc/yum.repos.d/elasticsearch-1.2.repo
 # which is needed by bin/logstash :)
 RUN yum install -y openssh-server which
 RUN sshd-keygen
@@ -15,12 +15,12 @@ RUN sshd-keygen
 ## kibana && nginx
 RUN yum install -y nginx
 WORKDIR /opt/
-RUN wget -q https://download.elasticsearch.org/kibana/kibana/kibana-3.0.0.tar.gz
-RUN tar xf kibana-3.0.0.tar.gz
+RUN wget -q https://download.elasticsearch.org/kibana/kibana/kibana-3.1.0.tar.gz
+RUN tar xf kibana-3.1.0.tar.gz
 WORKDIR /etc/nginx/conf.d
 RUN wget -q https://raw.githubusercontent.com/elasticsearch/kibana/master/sample/nginx.conf
 RUN sed -i -e 's/kibana.myhost.org;/localhost;/' nginx.conf
-RUN sed -i -e 's#/usr/share/kibana3#/opt/kibana-3.0.0/#' nginx.conf
+RUN sed -i -e 's#/usr/share/kibana3#/opt/kibana-3.1.0/#' nginx.conf
 WORKDIR /etc/nginx/
 RUN if ! grep "daemon off" nginx.conf ;then sed -i '/worker_processes.*/a daemon off;' nginx.conf;fi
 ADD etc/supervisord.d/nginx.ini /etc/supervisord.d/nginx.ini
