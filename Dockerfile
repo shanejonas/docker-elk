@@ -38,7 +38,7 @@ ADD etc/supervisord.d/logstash.ini /etc/supervisord.d/logstash.ini
 
 # elasticsearch
 RUN yum install -y elasticsearch
-RUN sed -i '/# cluster.name:.*/a cluster.name: logstash' /etc/elasticsearch/elasticsearch.yml
+# RUN sed -i '/# cluster.name:.*/a cluster.name: logstash' /etc/elasticsearch/elasticsearch.yml
 ## Makes no sense to be done while building
 #RUN sed -i "/# node.name:.*/a node.name: $(hostname)" /etc/elasticsearch/elasticsearch.yml
 ADD etc/supervisord.d/elasticsearch.ini /etc/supervisord.d/elasticsearch.ini
